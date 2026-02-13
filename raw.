@@ -1,0 +1,26 @@
+local player = game.Players.LocalPlayer
+local button = script.Parent
+
+local normalSpeed = 16
+local runSpeed = 40
+local running = false
+
+local function updateSpeed()
+	local char = player.Character
+	if char and char:FindFirstChild("Humanoid") then
+		char.Humanoid.WalkSpeed = running and runSpeed or normalSpeed
+	end
+end
+
+button.Text = "Speed: OFF"
+
+button.MouseButton1Click:Connect(function()
+	running = not running
+	button.Text = running and "Speed: ON" or "Speed: OFF"
+	updateSpeed()
+end)
+
+player.CharacterAdded:Connect(function()
+	task.wait(1)
+	updateSpeed()
+end)
